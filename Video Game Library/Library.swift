@@ -13,7 +13,7 @@ import Foundation
 class Library {
     
     // An empty array of Games objects
-    private var gameArray: [Game] = [Game(title: "Pikmin 3"), Game(title: "Super Mario Galaxy"), Game(title: "Skyrim"), Game(title: "Crazy Taxi"), Game(title: "Paperboy"), Game(title: "<#T##String#>")]
+    private var gameArray: [Game] = [Game(title: "Pikmin 3"), Game(title: "Super Mario Galaxy"), Game(title: "Skyrim"), Game(title: "Crazy Taxi"), Game(title: "Paperboy"), Game(title: "Sonic Boom")]
     
     // MARK:- Functions
     
@@ -32,8 +32,9 @@ class Library {
         // Placeholder: Since we don't have a way to list our games yet, this will go through each game and print the title
         for (n, game) in gameArray.enumerated() {
             print("\(n). \(game.title)")
-            print("Game added. Enter '7' for Menu or '8' to Exit.")
+            
         }
+        print("Game added.")
     }
     
     func removeGame() {
@@ -44,16 +45,15 @@ class Library {
             print("\(n).  \(game.title)")
         }
         
-        
         removeGameInput = Int(readLine()!)
         
         while removeGameInput! > gameArray.count-1 || removeGameInput! < 0 {
-            print("Invalid input. Enter '7' for Menu or '8' to Exit.")
+            print("Please enter a valid number.")
             removeGameInput = Int(readLine()!)
         }
         
         gameArray.remove(at: removeGameInput!)
-        print("Game removed. Enter '7' for Menu or '8' to Exit.")
+        print("Game removed.")
     }
     
     
@@ -63,7 +63,6 @@ class Library {
         for (n, game) in gameArray.enumerated() {
             if game.checkedIn {
                 print("\(n). \(game.title)")
-                print("Enter '7' for Menu or '8' to Exit.")
             }
         }
     }
@@ -74,7 +73,6 @@ class Library {
         for (n, game) in gameArray.enumerated() {
             if game.checkedIn == false {
                 print("\(n). \(game.title)")
-                print("Enter '7' for Menu or '8' to Exit.")
             }
         }
     }
@@ -82,16 +80,64 @@ class Library {
     
     
     func checkGameOut() {
-        //TODO:- Add functionality to check out games from the available games that aren't checked out from the gameArray and the due date
+        //Add functionality to check out games from the available games that aren't checked out from the gameArray and the due date
+        
+        let currentCalendar = Calendar.current
+        let dueDate = currentCalendar.date(byAdding: .day, value: 14, to: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM dd, YYYY"
+        print("Please enter the number of the game you would like to check out: ")
+        
+        for (n, game) in gameArray.enumerated() {
+            if game.checkedIn {
+                print("\(n).  \(game.title)")
+                
+            }
+        }
+        var checkOutInput = Int(readLine()!)
+        
+        while checkOutInput! > gameArray.count-1 || checkOutInput! < 0 {
+            print("Please enter a valid number.")
+            checkOutInput = Int(readLine()!)
+        }
+        
+        
+        
+        gameArray[checkOutInput!].dueDate = dueDate
+        
+        
+        gameArray[checkOutInput!].checkedIn = false
+        print("This game is due back on \(dateFormatter.string(from: dueDate!))")
         
         
     }
-    
-    
     func checkGameIn() {
-        //TODO:- Add functionality to check in games back to the gameArray
+        // Add functionality to check in games back to the gameArray
+        print("Please enter the number of the game you would like to check in: ")
         
+        for (n, game) in gameArray.enumerated() {
+            if game.checkedIn == false {
+                print("\(n).  \(game.title)")
+            }
+        }
+        
+        var checkInInput = Int(readLine()!)
+        
+        while checkInInput! > gameArray.count-1 || checkInInput! < 0 {
+            print("Please enter a valid number.")
+            checkInInput = Int(readLine()!)
+        }
+        
+        
+        
+        let currentCalendar = Calendar.current
+        let dueDate = currentCalendar.date(byAdding: .day, value: 14, to: Date())
+        gameArray[checkInInput!].dueDate = dueDate
+        
+        gameArray[checkInInput!].checkedIn = true
+        print("Thank you for checkingt his game back in.")
     }
-    
 }
+
+
 

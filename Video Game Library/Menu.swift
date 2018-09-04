@@ -48,9 +48,11 @@ class Menu {
             library.listUnavalableGames()
             help()
         case "5":
-            print("Check out game")
+            library.checkGameOut()
+            help()
         case "6":
-            print("Check in game")
+            library.checkGameIn()
+            help()
         case "7":
             help()
         case "8":
@@ -104,7 +106,7 @@ class Menu {
                 input = line
                 
             } else {
-                print("Invalid input.")
+                print("Invalid input. Enter '7' for Menu or '8' to Exit.")
             }
         } while input == nil
         return input!
