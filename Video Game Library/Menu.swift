@@ -45,7 +45,8 @@ class Menu {
            library.listAvailableGames()
             help()
         case "4":
-            print("Check out game")
+            library.listUnavalableGames()
+            help()
         case "5":
             print("List check out games")
         case "6":
