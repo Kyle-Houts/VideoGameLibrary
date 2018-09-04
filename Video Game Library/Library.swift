@@ -13,7 +13,7 @@ import Foundation
 class Library {
     
     // An empty array of Games objects
-    private var gameArray: [Game] = [Game(title: "Pikmin 3"), Game(title: "Super Mario Galaxy"), Game(title: "Skyrim"), Game(title: "Crazy Taxi"), Game(title: "Paperboy")]
+    private var gameArray: [Game] = [Game(title: "Pikmin 3"), Game(title: "Super Mario Galaxy"), Game(title: "Skyrim"), Game(title: "Crazy Taxi"), Game(title: "Paperboy"), Game(title: "<#T##String#>")]
     
     // MARK:- Functions
     
@@ -31,10 +31,9 @@ class Library {
         
         // Placeholder: Since we don't have a way to list our games yet, this will go through each game and print the title
         for (n, game) in gameArray.enumerated() {
-            print("\(n + 1). \(game.title)")
-            
+            print("\(n). \(game.title)")
+            print("Game added. Enter '7' for Menu or '8' to Exit.")
         }
-        
     }
     
     func removeGame() {
@@ -42,14 +41,19 @@ class Library {
         print("Please enter the number of the title of the game to remove: ")
         var removeGameInput: Int?
         for (n, game) in gameArray.enumerated() {
-            print("\(n + 1).  \(game.title)")
-            if removeGameInput! > (n + 1) {
-                print("Please choose a valid number")
-            }
+            print("\(n).  \(game.title)")
         }
         
+        
         removeGameInput = Int(readLine()!)
+        
+        while removeGameInput! > gameArray.count-1 || removeGameInput! < 0 {
+            print("Invalid input. Enter '7' for Menu or '8' to Exit.")
+            removeGameInput = Int(readLine()!)
+        }
+        
         gameArray.remove(at: removeGameInput!)
+        print("Game removed. Enter '7' for Menu or '8' to Exit.")
     }
     
     
@@ -58,7 +62,8 @@ class Library {
         // Add functionality to list available games from the gameArray
         for (n, game) in gameArray.enumerated() {
             if game.checkedIn {
-                print("\(n + 1). \(game.title)")
+                print("\(n). \(game.title)")
+                print("Enter '7' for Menu or '8' to Exit.")
             }
         }
     }
@@ -68,7 +73,8 @@ class Library {
         // Add functionality to list games checked out of the gameArray and their due dates
         for (n, game) in gameArray.enumerated() {
             if game.checkedIn == false {
-                print("\(n + 1). \(game.title)")
+                print("\(n). \(game.title)")
+                print("Enter '7' for Menu or '8' to Exit.")
             }
         }
     }
@@ -77,6 +83,7 @@ class Library {
     
     func checkGameOut() {
         //TODO:- Add functionality to check out games from the available games that aren't checked out from the gameArray and the due date
+        
         
     }
     
