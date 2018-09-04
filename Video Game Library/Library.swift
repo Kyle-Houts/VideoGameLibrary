@@ -30,38 +30,49 @@ class Library {
         gameArray.append(addGameInput!)
         
         // Placeholder: Since we don't have a way to list our games yet, this will go through each game and print the title
-        for game in gameArray {
-            print(game.title)
+        for (n, game) in gameArray.enumerated() {
+            print("\(n + 1). \(game.title)")
+            
         }
+        
     }
     
     func removeGame() {
-        // TODO:- Add functionality to remove a game from the gameArray
+        // Add functionality to remove a game from the gameArray
         print("Please enter the number of the title of the game to remove: ")
+        var removeGameInput: Int?
         for (n, game) in gameArray.enumerated() {
             print("\(n + 1).  \(game.title)")
+            if removeGameInput! > (n + 1) {
+                print("Please choose a valid number")
+            }
         }
-        var removeGameInput: Int?
+        
         removeGameInput = Int(readLine()!)
         gameArray.remove(at: removeGameInput!)
-        //            if removeGameInput! > (n + 1) {
-        //                print("Please choose a valid number")
     }
     
     
     
     func listAvailableGames() {
         // Add functionality to list available games from the gameArray
-        for game in gameArray {
-            print(game.title)
+        for (n, game) in gameArray.enumerated() {
+            if game.checkedIn {
+                print("\(n + 1). \(game.title)")
+            }
         }
     }
     
     
     func listUnavalableGames() {
-        // TODO:- Add functionality to list games checked out of the gameArray and their due dates
-        
+        // Add functionality to list games checked out of the gameArray and their due dates
+        for (n, game) in gameArray.enumerated() {
+            if game.checkedIn == false {
+                print("\(n + 1). \(game.title)")
+            }
+        }
     }
+    
     
     
     func checkGameOut() {
