@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 class Menu {
     
     var shouldQuit = false
@@ -57,6 +59,8 @@ class Menu {
             help()
         case "8":
             quit()
+        case "13":
+            print("This is where the cheat goes")
         default:
             break
         }
@@ -106,7 +110,7 @@ class Menu {
                 input = line
                 
             } else {
-                print("Invalid input. Enter '7' for Menu or '8' to Exit.")
+                print("Invalid input.")
             }
         } while input == nil
         return input!

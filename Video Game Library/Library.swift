@@ -86,31 +86,34 @@ class Library {
         let dueDate = currentCalendar.date(byAdding: .day, value: 14, to: Date())
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM dd, YYYY"
+        
         print("Please enter the number of the game you would like to check out: ")
         
         for (n, game) in gameArray.enumerated() {
             if game.checkedIn {
                 print("\(n).  \(game.title)")
-                
             }
         }
+        
         var checkOutInput = Int(readLine()!)
         
-        while checkOutInput! > gameArray.count-1 || checkOutInput! < 0 {
+        if  gameArray[checkOutInput!].checkedIn == false {
+            print("This game is already checked out")
+        } else {
+            gameArray[checkOutInput!].checkedIn = false
+            print("This game is due back on \(dateFormatter.string(from: dueDate!))")
+        }
+        
+        while checkOutInput! > (gameArray.count - 1) || checkOutInput! < 0 {
             print("Please enter a valid number.")
             checkOutInput = Int(readLine()!)
         }
         
-        
-        
         gameArray[checkOutInput!].dueDate = dueDate
         
-        
-        gameArray[checkOutInput!].checkedIn = false
-        print("This game is due back on \(dateFormatter.string(from: dueDate!))")
-        
-        
     }
+    
+    
     func checkGameIn() {
         // Add functionality to check in games back to the gameArray
         print("Please enter the number of the game you would like to check in: ")
@@ -129,13 +132,27 @@ class Library {
         }
         
         
-        
         let currentCalendar = Calendar.current
         let dueDate = currentCalendar.date(byAdding: .day, value: 14, to: Date())
-        gameArray[checkInInput!].dueDate = dueDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM dd, YYYY"
+        
+        // FIXME: Attempting to compare currentCalendar to dueDate to see if game is past due.
+        //        if currentCalendar.compare(dueDate) == .orderedAscending {
+        //            print("This game is past due. Please pay your fee.")
+        //        }
         
         gameArray[checkInInput!].checkedIn = true
-        print("Thank you for checkingt his game back in.")
+        print("Thank you for checking this game back in.")
+        
+    }
+    
+    
+    func cheat() {
+        
+        print("You have entered the secret video game library!")
+        
+        private var secretGameArray: [Game] = [Game(title: "Test1"), Game(title: "Test2"), Game(title: "Test3")]
     }
 }
 
