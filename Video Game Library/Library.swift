@@ -1,10 +1,13 @@
 //
 //  Library.swift
-//  Video Game Library
+//  VideoGameLibraryTest
 //
-//  Created by Kyle Houts on 9/4/18.
+//  Created by Kyle Houts on 9/5/18.
 //  Copyright © 2018 Kyle Houts. All rights reserved.
 //
+
+import Foundation
+
 
 import Foundation
 
@@ -13,7 +16,15 @@ import Foundation
 class Library {
     
     // An empty array of Games objects
-    private var gameArray: [Game] = [Game(title: "Pikmin 3"), Game(title: "Super Mario Galaxy"), Game(title: "Skyrim"), Game(title: "Crazy Taxi"), Game(title: "Paperboy"), Game(title: "Sonic Boom")]
+    private var gameArray: [Game] = [
+        Game(title: "Pikmin 3"),
+        Game(title: "Super Mario Galaxy"),
+        Game(title: "Skyrim"),
+        Game(title: "Crazy Taxi"),
+        Game(title: "Paperboy"),
+        Game(title: "Sonic Boom")]
+    
+    
     
     // MARK:- Functions
     
@@ -25,13 +36,13 @@ class Library {
         // Add input validation to make sure that the input isn't nil or an empty String.
         print("Please enter the title of the game: ")
         var addGameInput: Game?
-        addGameInput = Game(title: readLine()!)
+        addGameInput = Game(title: readLine()!.trimmingCharacters(in: .whitespacesAndNewlines))
         
         gameArray.append(addGameInput!)
         
         // Placeholder: Since we don't have a way to list our games yet, this will go through each game and print the title
-        for (n, game) in gameArray.enumerated() {
-            print("\(n). \(game.title)")
+        for (i, game) in gameArray.enumerated() {
+            print("\(i). \(game.title)")
             
         }
         print("Game added.")
@@ -41,8 +52,8 @@ class Library {
         // Add functionality to remove a game from the gameArray
         print("Please enter the number of the title of the game to remove: ")
         var removeGameInput: Int?
-        for (n, game) in gameArray.enumerated() {
-            print("\(n).  \(game.title)")
+        for (i, game) in gameArray.enumerated() {
+            print("\(i).  \(game.title)")
         }
         
         removeGameInput = Int(readLine()!)
@@ -57,26 +68,24 @@ class Library {
     }
     
     
-    
     func listAvailableGames() {
         // Add functionality to list available games from the gameArray
-        for (n, game) in gameArray.enumerated() {
-            if game.checkedIn {
-                print("\(n). \(game.title)")
+        for (i, game) in gameArray.enumerated() {
+            if game.checkedIn == true {
+                print("\(i). \(game.title)")
             }
         }
     }
     
     
-    func listUnavalableGames() {
+    func listUnavailableGames() {
         // Add functionality to list games checked out of the gameArray and their due dates
-        for (n, game) in gameArray.enumerated() {
+        for (i, game) in gameArray.enumerated() {
             if game.checkedIn == false {
-                print("\(n). \(game.title)")
+                print("\(i). \(game.title)")
             }
         }
     }
-    
     
     
     func checkGameOut() {
@@ -89,16 +98,16 @@ class Library {
         
         print("Please enter the number of the game you would like to check out: ")
         
-        for (n, game) in gameArray.enumerated() {
-            if game.checkedIn {
-                print("\(n).  \(game.title)")
+        for (i, game) in gameArray.enumerated() {
+            if game.checkedIn == true {
+                print("\(i).  \(game.title)")
             }
         }
         
         var checkOutInput = Int(readLine()!)
         
         if  gameArray[checkOutInput!].checkedIn == false {
-            print("This game is already checked out")
+            print("Invalid Input.")
         } else {
             gameArray[checkOutInput!].checkedIn = false
             print("This game is due back on \(dateFormatter.string(from: dueDate!))")
@@ -118,9 +127,9 @@ class Library {
         // Add functionality to check in games back to the gameArray
         print("Please enter the number of the game you would like to check in: ")
         
-        for (n, game) in gameArray.enumerated() {
+        for (i, game) in gameArray.enumerated() {
             if game.checkedIn == false {
-                print("\(n).  \(game.title)")
+                print("\(i).  \(game.title)")
             }
         }
         
@@ -132,29 +141,29 @@ class Library {
         }
         
         
+        
         let currentCalendar = Calendar.current
-        let dueDate = currentCalendar.date(byAdding: .day, value: 14, to: Date())
+        let dueDate = currentCalendar.date(byAdding: .day, value: 14, to: Date())!
+        
+        if Date() > dueDate {
+            print("This game is overdue. Please pay your fine.")
+        }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM dd, YYYY"
         
-        // FIXME: Attempting to compare currentCalendar to dueDate to see if game is past due.
-        //        if currentCalendar.compare(dueDate) == .orderedAscending {
-        //            print("This game is past due. Please pay your fee.")
-        //        }
-        
-        gameArray[checkInInput!].checkedIn = true
-        print("Thank you for checking this game back in.")
-        
+        if gameArray[checkInInput!].checkedIn == true {
+            print("Invalid Input.")
+        } else {
+            gameArray[checkInInput!].checkedIn = true
+            print("Thank you for checking this game back in.")
+        }
     }
     
-    
-    func cheat() {
-        
-        print("You have entered the secret video game library!")
-        
-        private var secretGameArray: [Game] = [Game(title: "Test1"), Game(title: "Test2"), Game(title: "Test3")]
-    }
 }
+
+
+
 
 
 

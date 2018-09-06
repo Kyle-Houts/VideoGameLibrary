@@ -1,21 +1,24 @@
 //
 //  Menu.swift
-//  Video Game Library
+//  VideoGameLibraryTest
 //
-//  Created by Kyle Houts on 8/30/18.
+//  Created by Kyle Houts on 9/5/18.
 //  Copyright © 2018 Kyle Houts. All rights reserved.
 //
 
-import Foundation
 
+import Foundation
 
 
 class Menu {
     
     var shouldQuit = false
+    var cheating = false
     
     // Create a new instance of the Library class
     let library = Library()
+    let secretLibrary = SecretLibrary()
+    
     
     func go() {
         help()
@@ -29,7 +32,11 @@ class Menu {
                 input = getInput()
             }
             
-            handleInput(input)
+            if cheating {
+                handleSecretInput(input)
+            } else {
+                handleInput(input)
+            }
             
         } while !shouldQuit
     }
@@ -44,10 +51,10 @@ class Menu {
             library.removeGame()
             help()
         case "3":
-           library.listAvailableGames()
+            library.listAvailableGames()
             help()
         case "4":
-            library.listUnavalableGames()
+            library.listUnavailableGames()
             help()
         case "5":
             library.checkGameOut()
@@ -59,8 +66,9 @@ class Menu {
             help()
         case "8":
             quit()
-        case "13":
-            print("This is where the cheat goes")
+        case "0":
+            cheating = true
+            secretHelp()
         default:
             break
         }
@@ -70,14 +78,14 @@ class Menu {
     
     func help() {
         print("""
-        Menu
+        Main Menu
         1. Add game
         2. Remove game
         3. List games available
         4. List checked out games
         5. Check out game
         6. Check in games
-        7. Help
+        7. Menu
         8. Quit
 
         """)
@@ -86,7 +94,7 @@ class Menu {
     
     
     func validateInput (_ input: String) -> Bool {
-        let menuOptions = Array(1...8)
+        let menuOptions = Array(0...8)
         
         guard let number = Int(input) else {return false}
         
@@ -100,7 +108,49 @@ class Menu {
         print("Thanks for coming")
     }
     
+    func secretHelp() {
+        print("""
+        Welcome to the secret menu!
+        1. Add secret game
+        2. Remove secret game
+        3. List secret games available
+        4. List secret checked out games
+        5. Check out secret game
+        6. Check in secret games
+        7. Main Menu
+        8. Quit
+        """)
+    }
     
+    func handleSecretInput(_ input: String) {
+        switch input {
+        case "1":
+            secretLibrary.addSecretGame()
+            secretHelp()
+        case "2":
+            secretLibrary.removeSecretGame()
+            secretHelp()
+        case "3":
+            secretLibrary.listAvailableSecretGames()
+            secretHelp()
+        case "4":
+            secretLibrary.listUnavailableSecretGames()
+            secretHelp()
+        case "5":
+            secretLibrary.checkSecretGameOut()
+            secretHelp()
+        case "6":
+            secretLibrary.checkSecretGameIn()
+            secretHelp()
+        case "7":
+            cheating = false
+            help()
+        case "8":
+            quit()
+        default:
+            break
+        }
+    }
     
     func getInput() -> String {
         var input: String? = nil
@@ -116,27 +166,4 @@ class Menu {
         return input!
     }
     
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
